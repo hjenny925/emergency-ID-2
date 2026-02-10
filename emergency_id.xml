@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="emergency_id.xsl"?>
+<emergency_id>
+    <user_info>
+        <name>HUANG, YING-JHEN</name>
+        <dob>2001 / 09 / 25</dob>
+        <passport>350****02</passport>
+        <blood_type>B Rh+</blood_type>
+        <last_update>2026/02/10</last_update>
+    </user_info>
+    
+    <medical_details>
+        <allergy>None (無已知過敏)</allergy>
+        <medication>None (無長期服用藥物)</medication>
+        <history>No significant history (無重大病史)</history>
+    </medical_details>
+
+    <contacts>
+        <contact role="Dad">+886-918-370-682</contact>
+        <contact role="Mom">+886-939-861-036</contact>
+    </contacts>
+</emergency_id>
