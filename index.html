@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency ID - HUANG, YING-JHEN</title>
+    <style>
+        :root {
+            --primary: #94806a;
+            --bg: #c2b09d;
+            --card-white: #dedbd7;
+            --text-main: #5a544d;
+            --accent: #8b4513;
+        }
+
+        body {
+            font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+            background-color: var(--bg);
+            margin: 0; padding: 15px;
+            display: flex; flex-direction: column; align-items: center;
+        }
+
+        .lang-selector { margin-bottom: 20px; width: 100%; max-width: 380px; }
+        select {
+            width: 100%; padding: 12px; border-radius: 12px; border: 2px solid white;
+            background: var(--primary); color: white; font-weight: bold; font-size: 16px;
+        }
+
+        .card {
+            width: 100%; max-width: 380px; background: var(--card-white);
+            border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+            overflow: hidden;
+        }
+
+        .header { background: var(--primary); color: white; padding: 20px; text-align: center; }
+        .header h1 { margin: 0; font-size: 18px; letter-spacing: 1px; }
+
+        .photo-sec { padding: 20px; text-align: center; }
+        .profile-img { 
+            width: 120px; height: 150px; object-fit: cover; 
+            border: 4px solid #fff; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .user-name { color: var(--primary); margin: 12px 0 0 0; font-size: 22px; }
+
+        .content { padding: 0 25px 20px; }
+        .section-title { font-size: 11px; color: var(--primary); font-weight: 900; margin: 18px 0 8px; text-transform: uppercase; border-left: 3px solid var(--primary); padding-left: 8px; }
+        
+        .item { margin-bottom: 10px; border-bottom: 1px solid rgba(133, 122, 110, 0.2); padding-bottom: 5px; }
+        .label { font-size: 10px; color: #7a6955; font-weight: bold; display: block; }
+        .value { font-size: 15px; color: var(--text-main); font-weight: 600; display: block; margin-top: 2px; }
+        
+        /* 醫療語句區塊 */
+        .help-box { background: #fff5f5; padding: 12px; border-radius: 12px; border: 1px solid #feb2b2; margin-top: 10px; }
+        .help-text { color: #c53030; font-weight: bold; font-style: italic; font-size: 14px; text-align: center; }
+
+        .footer { text-align: center; font-size: 10px; color: #7a6955; padding: 15px; opacity: 0.8; }
+    </style>
+</head>
+<body>
+
+    <div class="lang-selector">
+        <select id="langSelect" onchange="changeLanguage()">
+            <option value="zh">🇹🇼 中文 (Traditional Chinese)</option>
+            <option value="en">🇺🇸 English</option>
+            <option value="jp">🇯🇵 日本語 (Japanese)</option>
+            <option value="kr">🇰🇷 한국어 (Korean)</option>
+            <option value="vn">🇻🇳 Tiếng Việt (Vietnamese)</option>
+            <option value="th">🇹🇭 ภาษาไทย (Thai)</option>
+            <option value="fr">🇫🇷 Français (French)</option>
+            <option value="de">🇩🇪 Deutsch (German)</option>
+        </select>
+    </div>
+
+    <div class="card">
+        <div class="header"><h1 id="ui-title">緊急個人資訊</h1></div>
+        <div class="photo-sec">
+            <img src="photo.jpg" alt="Profile" class="profile-img" onerror="this.src='https://via.placeholder.com/120x150?text=PHOTO'">
+            <h2 class="user-name">HUANG, YING-JHEN</h2>
+        </div>
+
+        <div class="content">
+            <div class="section-title" id="sec-basic">Basic Info / 基本資料</div>
+            <div class="item"><span class="label" id="lbl-dob">出生日期</span><span class="value">2001 / 09 / 25</span></div>
+            <div class="item"><span class="label" id="lbl-passport">護照號碼</span><span class="value">350****02</span></div>
+            <div class="item"><span class="label" id="lbl-blood">血型</span><span class="value" style="color:var(--accent)">B Rh+</span></div>
+
+            <div class="section-title" id="sec-medical">Medical / 醫療資訊</div>
+            <div style="background: rgba(255,255,255,0.4); padding: 12px; border-radius: 12px;">
+                <div class="item" style="border:none"><span class="label" id="lbl-allergy">過敏紀錄</span><span class="value" id="val-allergy"></span></div>
+                <div class="item" style="border:none; margin:0"><span class="label" id="lbl-history">病史</span><span class="value" id="val-history"></span></div>
+            </div>
+
+            <div class="section-title" id="sec-contact">Emergency / 緊急聯絡</div>
+            <div class="item"><span class="label" id="lbl-ice">聯絡人</span><span class="value">Dad: +886-918-370-682<br>Mom: +886-939-861-036</span></div>
+            
+            <div class="section-title" id="sec-help">Help Phrase / 緊急求助語</div>
+            <div class="help-box">
+                <div class="help-text" id="val-help">"我需要醫療協助，請幫我叫救護車。"</div>
+            </div>
+        </div>
+        <div class="footer" id="ui-footer">最後更新: 2026/02/09</div>
+    </div>
+
+    <script>
+        const translations = {
+            zh: {
+                title: "緊急個人資訊", s1: "基本資料", s2: "醫療資訊", s3: "緊急聯絡", s4: "緊急求助語",
+                dob: "出生日期", passport: "護照號碼", blood: "血型",
+                allergy: "過敏紀錄", allergyVal: "無已知過敏", history: "病史", historyVal: "無重大疾病紀錄",
+                ice: "緊急聯絡人", help: "「我不舒服，請幫我叫救護車。」", footer: "最後更新: 2026/02/09"
+            },
+            en: {
+                title: "EMERGENCY MEDICAL ID", s1: "BASIC INFO", s2: "MEDICAL ALERT", s3: "CONTACTS", s4: "HELP PHRASE",
+                dob: "Date of Birth", passport: "Passport No.", blood: "Blood Type",
+                allergy: "Allergies", allergyVal: "No Known Allergies (NKA)", history: "Medical History", historyVal: "No significant history",
+                ice: "ICE Contact", help: '"I feel unwell. Please call an ambulance."', footer: "Last Updated: Feb 09, 2026"
+            },
+            jp: {
+                title: "緊急医療情報", s1: "基本情報", s2: "医療アラート", s3: "緊急連絡先", s4: "助けを求める",
+                dob: "生年月日", passport: "パスポート番号", blood: "血液型",
+                allergy: "アレルギー", allergyVal: "特になし", history: "既往歴", historyVal: "重大な病歴なし",
+                ice: "緊急連絡先", help: "「気分が悪いです。救急車を呼んでください。」", footer: "最終更新日: 2026/02/09"
+            },
+            kr: {
+                title: "긴급 의료 정보", s1: "기본 정보", s2: "의료 정보", s3: "비상 연락처", s4: "도움 요청",
+                dob: "생년월일", passport: "여권 번호", blood: "혈액형",
+                allergy: "알레르기", allergyVal: "알려진 알레르기 없음", history: "병력", historyVal: "중요한 병력 없음",
+                ice: "비상 연락처", help: '"몸이 안 좋습니다. 구급차를 불러주세요."', footer: "최종 업데이트: 2026/02/09"
+            },
+            vn: {
+                title: "THÔNG TIN KHẨN CẤP", s1: "THÔNG TIN CƠ BẢN", s2: "CẢNH BÁO Y TẾ", s3: "LIÊN HỆ", s4: "CÂU CỨU TRỢ",
+                dob: "Ngày sinh", passport: "Số hộ chiếu", blood: "Nhóm máu",
+                allergy: "Dị ứng", allergyVal: "Không có dị ứng nào", history: "Tiền sử bệnh", historyVal: "Không có tiền sử bệnh lý",
+                ice: "Liên hệ khẩn cấp", help: '"Tôi cảm thấy không khỏe. Vui lòng gọi xe cứu thương."', footer: "Cập nhật mới nhất: 09/02/2026"
+            },
+            th: {
+                title: "ข้อมูลการแพทย์ฉุกเฉิน", s1: "ข้อมูลพื้นฐาน", s2: "ข้อมูลทางการแพทย์", s3: "ติดต่อฉุกเฉิน", s4: "ขอความช่วยเหลือ",
+                dob: "วันเกิด", passport: "หมายเลขพาสปอร์ต", blood: "กรุ๊ปเลือด",
+                allergy: "ประวัติการแพ้", allergyVal: "ไม่มีประวัติการแพ้", history: "ประวัติการรักษา", historyVal: "ไม่มีโรคประจำตัว",
+                ice: "ติดต่อฉุกเฉิน", help: '"ฉันรู้สึกไม่สบาย โปรดเรียกรถพยาบาลให้หน่อย"', footer: "อัปเดตล่าสุด: 09/02/2026"
+            },
+            fr: {
+                title: "URGENCE MÉDICALE", s1: "INFOS DE BASE", s2: "ALERTE MÉDICALE", s3: "CONTACTS", s4: "AIDE",
+                dob: "Date de naissance", passport: "Passeport n°", blood: "Groupe Sanguin",
+                allergy: "Allergies", allergyVal: "Aucune allergie connue", history: "Antécédents", historyVal: "Aucun antécédent",
+                ice: "Contact d'urgence", help: '"Je ne me sens pas bien. Appelez une ambulance, s\'il vous plaît."', footer: "Mis à jour: 09 fév. 2026"
+            },
+            de: {
+                title: "NOTFALLAUSWEIS", s1: "BASISINFOS", s2: "MEDIZINISCHE DATEN", s3: "KONTAKTE", s4: "HILFE",
+                dob: "Geburtsdatum", passport: "Reisepass-Nr.", blood: "Blutgruppe",
+                allergy: "Allergien", allergyVal: "Keine Allergien bekannt", history: "Krankengeschichte", historyVal: "Keine Vorerkrankungen",
+                ice: "Notfallkontakt", help: '"Ich fühle mich nicht gut. Bitte rufen Sie einen Krankenwagen."', footer: "Letztes Update: 09. Feb. 2026"
+            }
+        };
+
+        function changeLanguage() {
+            const lang = document.getElementById('langSelect').value;
+            const t = translations[lang];
+
+            document.getElementById('ui-title').innerText = t.title;
+            document.getElementById('sec-basic').innerText = t.s1;
+            document.getElementById('sec-medical').innerText = t.s2;
+            document.getElementById('sec-contact').innerText = t.s3;
+            document.getElementById('sec-help').innerText = t.s4;
+            document.getElementById('lbl-dob').innerText = t.dob;
+            document.getElementById('lbl-passport').innerText = t.passport;
+            document.getElementById('lbl-blood').innerText = t.blood;
+            document.getElementById('lbl-allergy').innerText = t.allergy;
+            document.getElementById('val-allergy').innerText = t.allergyVal;
+            document.getElementById('lbl-history').innerText = t.history;
+            document.getElementById('val-history').innerText = t.historyVal;
+            document.getElementById('lbl-ice').innerText = t.ice;
+            document.getElementById('val-help').innerText = t.help;
+            document.getElementById('ui-footer').innerText = t.footer;
+        }
+
+        window.onload = changeLanguage;
+    </script>
+</body>
+</html>
